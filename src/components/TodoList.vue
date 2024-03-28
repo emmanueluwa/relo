@@ -1,13 +1,16 @@
 <script lang="ts" setup>
 import ListItem from "./ListItem.vue";
+import { ref, computed } from "vue";
+import type { Ref } from "vue";
 
 type Item = {
   title: string;
   checked?: boolean;
 };
 
-const listItems: Item[] = [
-  { title: "Make a todo list app", checked: true },
+//track using ref function, ref makes th array reactive
+const listItems: Ref<Item[]> = ref([
+  { title: "Make a todo list app", checked: false },
   { title: "Predict the weather", checked: false },
   { title: "Listen to the Quran", checked: false },
   { title: "Let's get cooking", checked: false },
@@ -16,13 +19,40 @@ const listItems: Item[] = [
   { title: "Organize a half court", checked: false },
   { title: "Learn a new language", checked: false },
   { title: "Publish my work" },
-];
+]);
+
+//update ui
+const updateItem = (item: Item): void => {
+  const updatedItem = findItemInList(item);
+  if (updatedItem) {
+    toggleItemChecked(updatedItem);
+  }
+};
+
+const findItemInList = (item: Item): Item | undefined => {
+  return listItems.value.find(
+    (itemInList: Item) => itemInList.title === item.title
+  );
+};
+
+const toggleItemChecked = (item: Item): void => {
+  item.checked = !item.checked;
+};
+
+//computed values are cached and only update when one of the inputs(reactive value) change
+const sortedList = computed(() =>
+  [...listItems.value].sort((a, b) => (a.checked ? 1 : 0) - (b.checked ? 1 : 0))
+);
 </script>
 
 <template>
   <ul>
-    <li :key="key" v-for="(item, key) in listItems">
-      <ListItem :is-checked="false">{{ item.title }}</ListItem>
+    <li :key="key" v-for="(item, key) in sortedList">
+      <ListItem
+        :is-checked="item.checked"
+        v-on:click.prevent="updateItem(item)"
+        >{{ item.title }}</ListItem
+      >
     </li>
   </ul>
 </template>
