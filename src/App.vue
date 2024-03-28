@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import AppHeader from "./components/AppHeader.vue";
 import TodoList from "./components/TodoList.vue";
+import GetLocation from "./components/GetLocation.vue";
 </script>
 
 <template>
   <AppHeader />
   <TodoList />
+  <GetLocation />
 </template>
 
 <style scoped>

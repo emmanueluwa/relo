@@ -28,7 +28,12 @@ const initialiseListItems = (): void => {
       { title: "Make a todo list app", checked: false },
       { title: "Predict the weather", checked: false },
       { title: "Listen to the Quran", checked: false },
-      // Add more default items as needed
+      { title: "Let's get cooking", checked: false },
+      { title: "Pump some iron", checked: false },
+      { title: "Track my expenses", checked: false },
+      { title: "Organize a half court", checked: false },
+      { title: "Learn a new language", checked: false },
+      { title: "Publish my work" },
     ];
     storageItems.value = listItems;
     setToStorage(listItems);
